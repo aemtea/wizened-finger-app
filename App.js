@@ -1,8 +1,9 @@
 import { Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ConversationsScreen from './screens/conversations';
 import LoginScreen from './screens/login';
+import ConversationsScreen from './screens/conversations';
+import ConversationScreen from './screens/conversation';
 
 const Stack = createNativeStackNavigator();
 
@@ -10,7 +11,7 @@ export default App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-      <Stack.Screen
+        <Stack.Screen
           name="Login"
           component={LoginScreen}
           options={{
@@ -26,6 +27,13 @@ export default App = () => {
               <Button
                 title="Filter" />
             )
+          }}
+        />
+        <Stack.Screen
+          name="Conversation"
+          component={ConversationScreen}
+          options={{
+            title: 'Blaidd the Half-Wolf'
           }}
         />
       </Stack.Navigator>

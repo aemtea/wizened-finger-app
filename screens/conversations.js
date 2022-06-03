@@ -1,12 +1,12 @@
 import { View } from 'react-native';
 import ConversationPreview from '../components/conversationPreview';
 
-const ConversationsScreen = () => {
+const ConversationsScreen = ({ navigation }) => {
   return (
     <View>
-      <ConversationPreview />
-      <ConversationPreview />
-      <ConversationPreview />
+      <ConversationPreview navigation={navigation} />
+      <ConversationPreview navigation={navigation} />
+      <ConversationPreview navigation={navigation} />
     </View>
   );
 };
