@@ -3,7 +3,7 @@ import ConversationPreview from '../components/conversationPreview';
 
 const ConversationsScreen = ({ navigation }) => {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <ConversationPreview navigation={navigation} />
       <ConversationPreview navigation={navigation} />
       <ConversationPreview navigation={navigation} />
