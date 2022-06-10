@@ -9,6 +9,7 @@ import ConversationScreen from './screens/conversation/conversation';
 
 const Stack = createNativeStackNavigator();
 
+// TODO - move component into own file
 class App extends React.Component {
   render() {
     return <NavigationContainer>

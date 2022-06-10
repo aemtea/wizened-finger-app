@@ -1,4 +1,5 @@
-import { FlatList, SafeAreaView, StatusBar, Text } from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
+import TemplateItem from '../templateItem/templateItem';
 import styles from './templateSelector.style';
 
 const templates = [
@@ -29,16 +30,12 @@ const templates = [
   { id: 25, title: '****…' },
 ];
 
-const TemplateSelctor = () => {
-  const renderItem = ({ item }) => (
-      <Text>{item.title}</Text>
-  );
-
+const TemplateSelctor = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={templates}
-        renderItem={renderItem}
+        renderItem={({ item }) => <TemplateItem item={item} onTemplateSelected={props.onTemplateSelected} />}
       />
     </SafeAreaView>
   );

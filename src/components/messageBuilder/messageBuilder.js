@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button, Modal, Text, View } from 'react-native';
 import TemplateSelctor from '../templateSelector/templateSelector';
 import styles from './messageBuilder.style';
 
 const MessageBuilder = (props) => {
   const [templateSelectorVisible, setTemplateSelectorVisible] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState(undefined);
+
+  const onTemplateSelected = useCallback((item) => {
+    setSelectedTemplate(item.title);
+    setTemplateSelectorVisible(false);
+  });
 
   return (
     <View style={styles.container}>
@@ -19,6 +25,7 @@ const MessageBuilder = (props) => {
       <Button
         title='Add'
       />
+      <Text>{selectedTemplate}</Text>
       <Button
         title='Okay'
         onPress={() => {
@@ -31,7 +38,7 @@ const MessageBuilder = (props) => {
         onRequestClose={() => {
           setTemplateSelectorVisible(false);
         }}>
-        <TemplateSelctor />
+        <TemplateSelctor onTemplateSelected={onTemplateSelected} />
       </Modal>
     </View>
   );
