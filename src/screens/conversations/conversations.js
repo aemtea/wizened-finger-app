@@ -1,9 +1,10 @@
 import { View } from 'react-native';
-import ConversationPreview from '../components/conversationPreview';
+import ConversationPreview from '../../components/conversationPreview/conversationPreview';
+import styles from './conversations.style';
 
 const ConversationsScreen = ({ navigation }) => {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <ConversationPreview navigation={navigation} />
       <ConversationPreview navigation={navigation} />
       <ConversationPreview navigation={navigation} />

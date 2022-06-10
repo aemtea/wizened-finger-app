@@ -1,15 +1,17 @@
+import { registerRootComponent } from 'expo';
+import React from 'react';
 import { Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from './screens/login';
-import ConversationsScreen from './screens/conversations';
-import ConversationScreen from './screens/conversation';
+import LoginScreen from './screens/login/login';
+import ConversationsScreen from './screens/conversations/conversations';
+import ConversationScreen from './screens/conversation/conversation';
 
 const Stack = createNativeStackNavigator();
 
-export default App = () => {
-  return (
-    <NavigationContainer>
+class App extends React.Component {
+  render() {
+    return <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
@@ -38,5 +40,7 @@ export default App = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  }
 }
+
+registerRootComponent(App);
