@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button, Modal, Text, View } from 'react-native';
 import MessageBuilder from '../messageBuilder/messageBuilder';
 import styles from './addMessage.style';
 
 const AddMessage = () => {
   const [messageBuilderVisible, setMessageBuilderVisible] = useState(false);
+  const onMessageBuilt = useCallback(() => {
+    setMessageBuilderVisible(false);
+  });
 
   return (
     <View style={styles.container}>
@@ -26,7 +29,7 @@ const AddMessage = () => {
           setMessageBuilderVisible(false);
         }}
       >
-        <MessageBuilder setModalVisible={setMessageBuilderVisible} />
+        <MessageBuilder onMessageBuilt={onMessageBuilt} />
       </Modal>
     </View>
   )

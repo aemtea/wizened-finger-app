@@ -29,7 +29,7 @@ const MessageBuilder = (props) => {
       <Button
         title='Okay'
         onPress={() => {
-          props.setModalVisible(false);
+          props.onMessageBuilt();
         }}
       />
       <Modal
