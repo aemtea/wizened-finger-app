@@ -5,7 +5,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import renderer from 'react-test-renderer';
-import TemplateItem from '../../components/templateItem/templateItem';
+import TemplateItem from './templateItem';
 
 describe('<TemplateItem />', () => {
   let mockFn;

@@ -4,7 +4,7 @@
 
  import React from 'react';
  import renderer from 'react-test-renderer'; 
- import App from '../../navigation/app';
+ import App from './app';
  
  jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
