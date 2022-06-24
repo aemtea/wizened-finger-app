@@ -23,6 +23,7 @@ const AddMessage = () => {
         </View>
       </View>
       <Modal
+        transparent={true}
         animationType="fade"
         visible={messageBuilderVisible}
         onRequestClose={() => {

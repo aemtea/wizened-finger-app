@@ -1,5 +1,7 @@
 import { render, fireEvent } from '@testing-library/react-native';
 import MessageBuilder from './messageBuilder';
+import templates from '../../data/templates';
+import categories from '../../data/categories';
 import words from '../../data/words';
 
 describe('<MessageBuilder />', () => {
@@ -13,28 +15,44 @@ describe('<MessageBuilder />', () => {
       const { getAllByText, getByText, queryByText } = render(<MessageBuilder onMessageBuilt={mockFn} />);
 
       fireEvent.press(getAllByText('Add')[0]);
-      fireEvent.press(getByText('**** ahead'));
+      fireEvent.press(getByText(templates[0].title));
 
-      expect(queryByText('**** ahead')).toBeTruthy();
-      expect(queryByText('No **** ahead')).toBeNull();
+      expect(queryByText(templates[0].title)).toBeTruthy();
+      expect(queryByText(templates[1].title)).toBeNull();
     });
 
     it('displays selected word', () => {
       const { getAllByText, getByText, queryByText } = render(<MessageBuilder onMessageBuilt={mockFn} />);
 
       fireEvent.press(getAllByText('Add')[1]);
+      fireEvent.press(getByText(categories[0].title));
       fireEvent.press(getByText(words[0].title));
-
+      expect(queryByText(categories[0].title)).toBeNull();
       expect(queryByText(words[0].title)).toBeTruthy();
       expect(queryByText(words[1].title)).toBeNull();
+
+    });
+
+    it('displays selected full message', () => {
+      const { getAllByText, getByText, queryByText } = render(<MessageBuilder onMessageBuilt={mockFn} />);
+
+      fireEvent.press(getAllByText('Add')[0]);
+      fireEvent.press(getByText(templates[0].title));
+
+      fireEvent.press(getAllByText('Add')[1]);
+      fireEvent.press(getByText(categories[0].title));
+      fireEvent.press(getByText(words[0].title));
+
+      var builtMessage = templates[0].title.replace("****", words[0].title);
+      expect(queryByText(builtMessage)).toBeTruthy();
     });
   });
 
-  describe('Okay Button', () => {
+  describe('Finish Button', () => {
     it('closes <MessageBuilder />', () => {
       const { getByText } = render(<MessageBuilder onMessageBuilt={mockFn} />);
 
-      fireEvent.press(getByText('Okay'));
+      fireEvent.press(getByText('Finish'));
 
       expect(mockFn).toHaveBeenCalled();
     });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<TemplateItem /> renders correctly 1`] = `
+exports[`<SelectableItem /> renders correctly 1`] = `
 <View
   accessible={true}
   collapsable={false}

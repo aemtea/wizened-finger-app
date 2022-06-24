@@ -1,25 +1,29 @@
 import { render, fireEvent } from '@testing-library/react-native';
-import WordSelector from './wordSelector';
-import words from '../../data/words';
+import ItemSelector from './itemSelector';
 
-describe('<WordSelector />', () => {
+const data = [
+  { id: 0, title: 'fist item' },
+  { id: 1, title: 'second item' }
+];
+
+describe('<ItemSelector />', () => {
   let mockFn;
   beforeEach(() => {
     mockFn = jest.fn();
   });
 
   it('displays words', () => {
-    const { queryByText } = render(<WordSelector onWordSelected={mockFn} />);
+    const { queryByText } = render(<ItemSelector data={data} onItemSelected={mockFn} />);
 
-    expect(queryByText(words[0].title)).toBeTruthy();
+    expect(queryByText(data[0].title)).toBeTruthy();
   });
 
   it('returns selected word on press', () => {
-    const { getByText } = render(<WordSelector onWordSelected={mockFn} />);
+    const { getByText } = render(<ItemSelector data={data} onItemSelected={mockFn} />);
 
-    fireEvent.press(getByText(words[1].title));
+    fireEvent.press(getByText(data[1].title));
 
-    expect(mockFn).toHaveBeenCalledWith(words[1]);
+    expect(mockFn).toHaveBeenCalledWith(data[1]);
   });
 
   // describe('Message Preview', () => {
