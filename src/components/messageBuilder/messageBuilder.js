@@ -61,6 +61,7 @@ const MessageBuilder = (props) => {
         }}
       />
       <Text>{selectedTemplate}</Text>
+
       <Text>Words</Text>
       <Button
         title='Add'
@@ -69,11 +70,12 @@ const MessageBuilder = (props) => {
         }}
       />
       <Text>{selectedWord}</Text>
+
       <Text>{builtMessage}</Text>
       <Button
         title='Finish'
         onPress={() => {
-          props.onMessageBuilt();
+          props.onMessageBuilt(builtMessage);
         }}
       />
 
