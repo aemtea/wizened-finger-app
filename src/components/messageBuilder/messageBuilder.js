@@ -11,8 +11,8 @@ const MessageBuilder = (props) => {
   const [categorySelectorVisible, setCategorySelectorVisible] = useState(false);
   const [wordSelectorVisible, setWordSelectorVisible] = useState(false);
 
-  const [selectedTemplate, setSelectedTemplate] = useState('');
-  const [selectedWord, setSelectedWord] = useState('');
+  const [selectedTemplate, setSelectedTemplate] = useState(undefined);
+  const [selectedWord, setSelectedWord] = useState(undefined);
   const [builtMessage, setBuiltMessage] = useState('');
   const [filteredWords, setFilteredWords] = useState([]);
 
@@ -29,25 +29,25 @@ const MessageBuilder = (props) => {
     }
   });
 
-  const onTemplateSelected = useCallback((item) => {
-    setSelectedTemplate(item.title);
+  const onTemplateSelected = useCallback((template) => {
+    setSelectedTemplate(template);
     setTemplateSelectorVisible(false);
   });
 
-  const onCategorySelected = useCallback((item) => {
+  const onCategorySelected = useCallback((category) => {
     setWordSelectorVisible(true);
-    setFilteredWords(words.filter(word => word.category == item.title));
+    setFilteredWords(words.filter(word => word.category == category.title));
   });
 
-  const onWordSelected = useCallback((item) => {
-    setSelectedWord(item.title);
+  const onWordSelected = useCallback((word) => {
+    setSelectedWord(word);
     setWordSelectorVisible(false);
     setCategorySelectorVisible(false);
   });
 
   useEffect(() => {
     if (selectedTemplate && selectedWord) {
-      setBuiltMessage(selectedTemplate.replace("****", selectedWord));
+      setBuiltMessage(selectedTemplate.title.split("****").join(selectedWord.title));
     }
   });
 
@@ -60,7 +60,7 @@ const MessageBuilder = (props) => {
           setTemplateSelectorVisible(true);
         }}
       />
-      <Text>{selectedTemplate}</Text>
+      <Text>{selectedTemplate ? selectedTemplate.title : ''}</Text>
       <Text>Words</Text>
       <Button
         title='Add'
@@ -68,12 +68,17 @@ const MessageBuilder = (props) => {
           setCategorySelectorVisible(true);
         }}
       />
-      <Text>{selectedWord}</Text>
+      <Text>{selectedWord ? selectedWord.title: ''}</Text>
       <Text>{builtMessage}</Text>
       <Button
         title='Finish'
         onPress={() => {
-          props.onMessageBuilt();
+          const message = {
+            template: selectedTemplate,
+            word: selectedWord
+          }
+
+          props.onMessageBuilt(message);
         }}
       />
 

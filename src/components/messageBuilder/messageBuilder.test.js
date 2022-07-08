@@ -27,6 +27,7 @@ describe('<MessageBuilder />', () => {
       fireEvent.press(getAllByText('Add')[1]);
       fireEvent.press(getByText(categories[0].title));
       fireEvent.press(getByText(words[0].title));
+
       expect(queryByText(categories[0].title)).toBeNull();
       expect(queryByText(words[0].title)).toBeTruthy();
       expect(queryByText(words[1].title)).toBeNull();
@@ -36,25 +37,38 @@ describe('<MessageBuilder />', () => {
     it('displays selected full message', () => {
       const { getAllByText, getByText, queryByText } = render(<MessageBuilder onMessageBuilt={mockFn} />);
 
-      fireEvent.press(getAllByText('Add')[0]);
+      const addButtons = getAllByText('Add');
+      fireEvent.press(addButtons[0]);
       fireEvent.press(getByText(templates[0].title));
 
-      fireEvent.press(getAllByText('Add')[1]);
+      fireEvent.press(addButtons[1]);
       fireEvent.press(getByText(categories[0].title));
       fireEvent.press(getByText(words[0].title));
 
-      var builtMessage = templates[0].title.replace("****", words[0].title);
+      var builtMessage = templates[0].title.split("****").join(words[0].title);
       expect(queryByText(builtMessage)).toBeTruthy();
     });
   });
 
   describe('Finish Button', () => {
-    it('closes <MessageBuilder />', () => {
-      const { getByText } = render(<MessageBuilder onMessageBuilt={mockFn} />);
+    it('returns built message', () => {
+      const message = {
+        template: templates[0],
+        word: words[0]
+      };
+      const { getAllByText, getByText } = render(<MessageBuilder onMessageBuilt={mockFn} />);
+
+      const addButtons = getAllByText('Add');
+      fireEvent.press(addButtons[0]);
+      fireEvent.press(getByText(templates[0].title));
+
+      fireEvent.press(addButtons[1]);
+      fireEvent.press(getByText(categories[0].title));
+      fireEvent.press(getByText(words[0].title));
 
       fireEvent.press(getByText('Finish'));
 
-      expect(mockFn).toHaveBeenCalled();
+      expect(mockFn).toBeCalledWith(message);
     });
   });
 });

@@ -2,7 +2,9 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop: 5,
+    marginBottom: 5
   },
   senderContainer : {
     justifyContent: 'flex-end'
@@ -17,7 +19,7 @@ const styles = StyleSheet.create({
   text: {
     backgroundColor: 'blue',
     color: 'white',
-    width: '60%'
+    maxWidth: '70%'
   }
 });
 

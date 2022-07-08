@@ -1,18 +1,18 @@
 import { useCallback, useState } from 'react';
-import { Button, Modal, Text, View } from 'react-native';
+import { Button, Modal, View } from 'react-native';
 import MessageBuilder from '../messageBuilder/messageBuilder';
 import styles from './addMessage.style';
 
-const AddMessage = () => {
+const AddMessage = (props) => {
   const [messageBuilderVisible, setMessageBuilderVisible] = useState(false);
-  const onMessageBuilt = useCallback(() => {
+  const onMessageBuilt = useCallback((message) => {
     setMessageBuilderVisible(false);
+    props.onMessageAdded(message);
   });
 
   return (
     <View style={styles.container}>
       <View style={styles.previewContainer}>
-        <Text style={styles.previewContainer.textPreview} />
         <View style={styles.previewContainer.addButton}>
           <Button
             title="+"

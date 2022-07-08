@@ -9,7 +9,7 @@ const Message = (props) => {
         source={{ uri: 'https://i.imgur.com/B1oKCwK.png' }}
       />
       <Text style={styles.text}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum magna est, vel cursus tortor vestibulum et. Quisque egestas, tortor.
+        {props.message.template.title.split("****").join(props.message.word.title)}
       </Text>
     </View>
   );

@@ -8,10 +8,6 @@ const styles = StyleSheet.create({
   previewContainer: {
     flexDirection: 'row',
 
-    textPreview: {
-      backgroundColor: 'lightgrey',
-      flex: 9
-    },
     addButton: {
       flex: 1
     }
