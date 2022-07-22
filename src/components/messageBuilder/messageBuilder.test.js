@@ -1,5 +1,6 @@
 import { render, fireEvent } from '@testing-library/react-native';
 import MessageBuilder from './messageBuilder';
+import { formatMessage } from '../../helpers/messageHelpers';
 import templates from '../../data/templates';
 import categories from '../../data/categories';
 import words from '../../data/words';
@@ -54,6 +55,7 @@ describe('<MessageBuilder />', () => {
     });
 
     it('does not display unselected word', () => {
+      var expectedMessage = 'enemy ahead';
       const { getAllByText, getByText, queryByText } = render(<MessageBuilder onMessageBuilt={mockFn} />);
 
       const addButtons = getAllByText('Add');
@@ -64,16 +66,17 @@ describe('<MessageBuilder />', () => {
       fireEvent.press(getByText(categories[0].title));
       fireEvent.press(getByText(words[0].title));
 
-      var builtMessage = templates[0].title.split("****").join(words[0].title);
-      expect(queryByText(builtMessage)).toBeTruthy();
+      expect(queryByText(expectedMessage)).toBeTruthy();
     });
   });
 
   describe('Finish Button', () => {
     it('returns built message', () => {
       const message = {
-        template: templates[0],
-        word: words[0]
+        content: {
+          template: templates[0],
+          word: words[0]
+        }
       };
       const { getAllByText, getByText } = render(<MessageBuilder onMessageBuilt={mockFn} />);
 

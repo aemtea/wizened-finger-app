@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Button, Modal, Text, View } from 'react-native';
 import ItemSelector from '../itemSelector/itemSelector';
 import styles from './messageBuilder.style';
+import { formatMessage } from '../../helpers/messageHelpers';
 import templates from '../../data/templates';
 import categories from '../../data/categories';
 import words from '../../data/words';
@@ -47,7 +48,7 @@ const MessageBuilder = (props) => {
 
   useEffect(() => {
     if (selectedTemplate && selectedWord) {
-      setBuiltMessage(selectedTemplate.title.split("****").join(selectedWord.title));
+      setBuiltMessage(formatMessage(selectedTemplate, selectedWord));
     }
   });
 
@@ -68,14 +69,16 @@ const MessageBuilder = (props) => {
           setCategorySelectorVisible(true);
         }}
       />
-      <Text>{selectedWord ? selectedWord.title: ''}</Text>
+      <Text>{selectedWord ? selectedWord.title : ''}</Text>
       <Text>{builtMessage}</Text>
       <Button
         title='Finish'
         onPress={() => {
           const message = {
-            template: selectedTemplate,
-            word: selectedWord
+            content: {
+              template: selectedTemplate,
+              word: selectedWord
+            }
           }
 
           props.onMessageBuilt(message);

@@ -3,8 +3,10 @@ import templates from '../../../data/templates';
 import words from '../../../data/words'
 
 const message = {
-  template: templates[0],
-  word: words[0]
+  content: {
+    template: templates[0],
+    word: words[0]
+  }
 };
 
 const MessageBuilder = (props) => {

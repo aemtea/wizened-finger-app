@@ -1,5 +1,6 @@
 import { Image, Text, View } from 'react-native';
 import styles from './message.style';
+import { formatMessage } from '../../helpers/messageHelpers';
 
 const Message = (props) => {
   return (
@@ -9,7 +10,7 @@ const Message = (props) => {
         source={{ uri: 'https://i.imgur.com/B1oKCwK.png' }}
       />
       <Text style={styles.text}>
-        {props.message.template.title.split("****").join(props.message.word.title)}
+        {formatMessage(props.message.content.template, props.message.content.word)}
       </Text>
     </View>
   );

@@ -9,8 +9,10 @@ describe('<AddMessage />', () => {
   it('returns built message', () => {
     const mockFn = jest.fn();
     const message = {
-      template: templates[0],
-      word: words[0]
+      content: {
+        template: templates[0],
+        word: words[0]
+      }
     };
 
     const { getByText } = render(<AddMessage onMessageAdded={mockFn} />);
