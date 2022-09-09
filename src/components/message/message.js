@@ -10,7 +10,7 @@ const Message = (props) => {
         source={{ uri: 'https://i.imgur.com/B1oKCwK.png' }}
       />
       <Text style={styles.text}>
-        {formatMessage(props.message.content.template, props.message.content.word)}
+        {props.message.content}
       </Text>
     </View>
   );

@@ -1,20 +1,12 @@
 import { Button, View } from 'react-native';
-import templates from '../../../data/templates';
-import words from '../../../data/words'
-
-const message = {
-  content: {
-    template: templates[0],
-    word: words[0]
-  }
-};
+import messages from '../../../data/messages';
 
 const MessageBuilder = (props) => {
   return (
     <View>
       <Button
         title="Bob"
-        onPress={() => props.onMessageBuilt(message)} />
+        onPress={() => props.onMessageBuilt(messages[0].content)} />
     </View>
   );
 }

@@ -78,6 +78,7 @@ describe('<MessageBuilder />', () => {
           word: words[0]
         }
       };
+      const formattedMessage = formatMessage(message.content.template, message.content.word);
       const { getAllByText, getByText } = render(<MessageBuilder onMessageBuilt={mockFn} />);
 
       const addButtons = getAllByText('Add');
@@ -90,7 +91,7 @@ describe('<MessageBuilder />', () => {
 
       fireEvent.press(getByText('Finish'));
 
-      expect(mockFn).toBeCalledWith(message);
+      expect(mockFn).toBeCalledWith(formattedMessage);
     });
   });
 });

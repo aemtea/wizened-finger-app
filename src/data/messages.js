@@ -1,3 +1,4 @@
+import { formatMessage } from '../helpers/messageHelpers';
 import templates from './templates';
 import words from './words'
 
@@ -5,10 +6,7 @@ const messages = [
   {
     conversationId: 0,
     senderId: 1,
-    content: {
-      template: templates[0],
-      word: words[0]
-    }
+    content: formatMessage(templates[0], words[0])
   }
 ];
 

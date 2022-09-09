@@ -74,14 +74,7 @@ const MessageBuilder = (props) => {
       <Button
         title='Finish'
         onPress={() => {
-          const message = {
-            content: {
-              template: selectedTemplate,
-              word: selectedWord
-            }
-          }
-
-          props.onMessageBuilt(message);
+          props.onMessageBuilt(builtMessage);
         }}
       />
 

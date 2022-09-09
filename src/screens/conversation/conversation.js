@@ -39,7 +39,7 @@ const ConversationScreen = ({navigation, route}) => {
   const onMessageAdded = useCallback((message) => {
     socket.emit('chat message', message);
 
-    setConversationMessages((conversationMessages) => ([...conversationMessages, message]));
+    setConversationMessages((conversationMessages) => ([...conversationMessages, {content: message}]));
   });
 
   return (

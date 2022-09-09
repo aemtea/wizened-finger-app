@@ -10,7 +10,7 @@ const ConversationPreview = (props) => {
 
   var conversationMessages = messages.filter(message => message.conversationId == props.conversation.id && message.senderId != 0);
   var lastMessage = conversationMessages[conversationMessages.length - 1];
-  var lastMessageContent = formatMessage(lastMessage.content.template, lastMessage.content.word);
+  var lastMessageContent = lastMessage.content;
 
   return (
     <View>
