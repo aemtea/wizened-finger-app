@@ -1,8 +1,8 @@
 import { render, fireEvent } from '@testing-library/react-native';
 import ConversationScreen from './conversation';
 import conversations from '../../data/conversations'
-
 jest.mock('../../components/messageBuilder/messageBuilder');
+jest.mock('socket.io-client');
 
 const route = { 
   params: {
@@ -27,5 +27,10 @@ describe('<ConversationScreen />', () => {
 
     //TODO assert different message
     expect(queryAllByText(expectedMessage).length).toBe(2);
+  });
+
+  it('receives message', () => {
+    
+
   });
 });

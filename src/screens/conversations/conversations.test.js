@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react-native';
-import Conversations from './conversations';
+import ConversationsScreen from './conversations';
 import users from '../../data/users';
 import conversations from '../../data/conversations';
 
-describe('<Conversations />', () => {
+describe('<ConversationsScreen />', () => {
   it('displays all conversations', () => {
-    const { queryByText } = render(<Conversations conversation={conversations[0]} />);
+    const { queryByText } = render(<ConversationsScreen conversation={conversations[0]} />);
 
     expect(queryByText(users[1].username)).toBeTruthy();
   });

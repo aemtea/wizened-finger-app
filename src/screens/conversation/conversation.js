@@ -1,16 +1,27 @@
 import { useCallback, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import AddMessage from '../../components/addMessage/addMessage';
 import Message from '../../components/message/message';
 import styles from './conversation.style';
 import messages from '../../data/messages';
 import { io } from 'socket.io-client';
 
-const socketEndpoint = "http://localhost:3000";
+let socketEndpoint;
+let userId;
+if (Platform.OS == 'android') {
+  socketEndpoint = "https://4a5d-71-135-28-202.ngrok.io";
+  userId = 0;
+} else {
+  socketEndpoint = "http://localhost:3000"
+  userId = 1;
+}
+
+
 let socket = null;
 
 const ConversationScreen = ({navigation, route}) => {
-  var initialMessages = messages.filter(message => message.conversationId == route.params.conversation.id);
+  const conversationId = route.params.conversation.id;
+  var initialMessages = messages.filter(message => message.conversationId == conversationId);
 
   const [conversationMessages, setConversationMessages] = useState(initialMessages);
 
@@ -29,24 +40,39 @@ const ConversationScreen = ({navigation, route}) => {
       console.log("disconnected");
     });
 
+    socket.on(`messageReceived:${conversationId}`, (message) => {
+      console.log("message received");
+
+      if (message.senderId != userId) {
+        setConversationMessages((conversationMessages) => ([...conversationMessages, message]));
+      }
+    });
+
     return function cleanup() {
       socket.off("connect_error");
       socket.off("connect");
       socket.off("disconnect");
+      socket.off(`messageReceived:${conversationId}`);
     }
   });
 
-  const onMessageAdded = useCallback((message) => {
+  const onMessageAdded = useCallback((content) => {
+    var message = {
+      conversationId: conversationId,
+      senderId: userId,
+      content: content
+    };
+
     socket.emit('chat message', message);
 
-    setConversationMessages((conversationMessages) => ([...conversationMessages, {content: message}]));
+    setConversationMessages((conversationMessages) => ([...conversationMessages, message]));
   });
 
   return (
     <View style={styles.container}>
       {conversationMessages.map((message, key) => {
         return (
-          <Message key={key} message={message} me={key % 2 == 0} />
+          <Message key={key} message={message} me={message.senderId == userId} />
         )
       })}
 
