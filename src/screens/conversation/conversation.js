@@ -9,7 +9,7 @@ import { io } from 'socket.io-client';
 let socketEndpoint;
 let userId;
 if (Platform.OS == 'android') {
-  socketEndpoint = "https://4a5d-71-135-28-202.ngrok.io";
+  socketEndpoint = "https://real-url-here.io";
   userId = 0;
 } else {
   socketEndpoint = "http://localhost:3000"
@@ -63,7 +63,7 @@ const ConversationScreen = ({navigation, route}) => {
       content: content
     };
 
-    socket.emit('chat message', message);
+    socket.emit('messageSent', message);
 
     setConversationMessages((conversationMessages) => ([...conversationMessages, message]));
   });
