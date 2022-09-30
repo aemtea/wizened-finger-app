@@ -5,13 +5,18 @@ import conversations from '../../data/conversations';
 jest.mock('../../components/messageBuilder/messageBuilder');
 jest.mock('socket.io-client');
 
-const route = { 
-  params: {
-    conversation: conversations[0]
-  }
-}
-
 describe('<ConversationScreen />', () => {
+  const route = {
+    params: {
+      conversation: conversations[0]
+    }
+  };
+  let socket;
+
+  beforeEach(() => {
+    socket = io(null);
+  });
+
   it('displays messages', () => {
     const expectedMessage = 'enemy ahead';
     const { queryByText } = render(<ConversationScreen route={route} />);
@@ -20,18 +25,20 @@ describe('<ConversationScreen />', () => {
   });
 
   it('adds built message', () => {
+    const mockFn = jest.fn();
     const expectedMessage = 'enemy ahead';
     const { getByText, queryAllByText } = render(<ConversationScreen route={route} />);
+    socket.on('messageSent', mockFn);
 
     fireEvent.press(getByText('+'));
     fireEvent.press(getByText('Bob'));
 
     //TODO assert different message
     expect(queryAllByText(expectedMessage).length).toBe(2);
+    expect(mockFn).toBeCalled();
   });
 
   it('displays socket message', () => {
-    const socket = io(null);
     const expectedMessage = 'my test msg';
     const message = {
       conversationId: conversations[0].id,

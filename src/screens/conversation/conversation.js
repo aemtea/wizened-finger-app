@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Platform, View } from 'react-native';
+import messageManager from '../../managers/messageManager'
 import AddMessage from '../../components/addMessage/addMessage';
 import Message from '../../components/message/message';
 import styles from './conversation.style';
 import messages from '../../data/messages';
-import { io } from 'socket.io-client';
 
 let socketEndpoint;
 let userId;
@@ -16,44 +16,18 @@ if (Platform.OS == 'android') {
   userId = 1;
 }
 
-
-let socket = null;
-
 const ConversationScreen = ({navigation, route}) => {
   const conversationId = route.params.conversation.id;
   var initialMessages = messages.filter(message => message.conversationId == conversationId);
 
   const [conversationMessages, setConversationMessages] = useState(initialMessages);
 
-  useEffect(() => {
-    socket = io(socketEndpoint);
-
-    socket.on("connect_error", (error) => {
-      console.log(error.message + " on " + socketEndpoint)
-    });
-
-    socket.on("connect", () => {
-      console.log("connected");
-    });
-
-    socket.on("disconnect", (reason) => {
-      console.log("disconnected");
-    });
-
-    socket.on(`messageReceived:${conversationId}`, (message) => {
-      console.log("message received");
-
+  useEffect(() => {   
+    messageManager.onMessageReceived(conversationId, (message) => {
       if (message.senderId != userId) {
         setConversationMessages((conversationMessages) => ([...conversationMessages, message]));
       }
     });
-
-    return function cleanup() {
-      socket.off("connect_error");
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off(`messageReceived:${conversationId}`);
-    }
   });
 
   const onMessageAdded = useCallback((content) => {
@@ -63,7 +37,7 @@ const ConversationScreen = ({navigation, route}) => {
       content: content
     };
 
-    socket.emit('messageSent', message);
+    messageManager.sendMessage(message);
 
     setConversationMessages((conversationMessages) => ([...conversationMessages, message]));
   });

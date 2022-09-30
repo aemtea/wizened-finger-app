@@ -4,21 +4,32 @@ import conversations from '../data/conversations';
 jest.mock('socket.io-client');
 
 describe('messageManager', () => {
+  let socket;
+  let mockFn;
+  const expectedMessage = {
+    conversationId: conversations[0].id,
+    senderId: 0,
+    content: 'my test msg'
+  };
+
+  beforeEach(() => {
+    socket = io(null);
+    mockFn = jest.fn()
+  });
+
   it('sends message', () => {
-    const socket = io(null);
-    let actualMessage = null;
-    const messageSent = (sentMessage) => {
-      actualMessage = sentMessage;
-    };
-    const expectedMessage = {
-      conversationId: conversations[0].id,
-      senderId: 0,
-      content: 'my test msg'
-    }
-    socket.on('messageSent', messageSent);
+    socket.on('messageSent', mockFn);
 
     messageManager.sendMessage(expectedMessage);
 
-    expect(actualMessage).toEqual(expectedMessage);
+    expect(mockFn).toBeCalledWith(expectedMessage);
+  });
+
+  it('receives message', () => {
+    messageManager.onMessageReceived(expectedMessage.conversationId, mockFn);
+
+    socket.emit(`messageReceived:${expectedMessage.conversationId}`, expectedMessage);
+    
+    expect(mockFn).toBeCalledWith(expectedMessage);
   });
 });

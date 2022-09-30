@@ -14,6 +14,11 @@ const sendMessage = (message) => {
   socket.emit('messageSent', message);
 };
 
+const onMessageReceived = (conversationId, callback) => {
+  socket.on(`messageReceived:${conversationId}`, callback);  
+};
+
 module.exports = {
-  sendMessage
+  sendMessage,
+  onMessageReceived
 };
